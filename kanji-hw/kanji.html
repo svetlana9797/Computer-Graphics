@@ -1,0 +1,196 @@
+<html>
+	<head>
+		<script src="three.min.js"></script>
+		<script src="kanji.js"></script>
+		
+	</head>
+	
+	<body onload="main()">
+		<!-- В тага h1 си напишете факултетния номер, групата в Мудъл и двете си имена-->
+		<h1>ф.н. 81422 &ndash; група 4 &ndash; Светлана Груева</h1>
+		
+		<script src="ThreeCSG.js"></script>
+		<script>
+			
+			//constructing the kanji with shapes
+			
+			var extrudeSettings = { amount: 4, bevelEnabled: true, bevelSegments: 2, steps: 2, bevelSize: 0.1, bevelThickness: 0.1 };
+			
+			//the figure 8
+			var shape1=new THREE.Shape();
+			shape1.moveTo(-3,0);
+			shape1.lineTo(-3,8);
+			shape1.lineTo(-1.5,8);
+			shape1.lineTo(-1.5,0);
+			shape1.lineTo(-3,0);
+			var geometry1 = new THREE.ExtrudeGeometry( shape1, extrudeSettings );
+			
+			var shape2=new THREE.Shape();
+			shape2.moveTo(-1.5,8);
+			shape2.lineTo(3,8);
+			shape2.lineTo(3,6.5);
+			shape2.lineTo(-1.5,6.5);
+			shape2.lineTo(-1.5,8);
+			var geometry2 = new THREE.ExtrudeGeometry( shape2, extrudeSettings );
+			
+			//create a bsp to hold all the parts
+			var bspkanji = (new ThreeBSP(geometry1)).union(new ThreeBSP(geometry2));
+			
+			var shape3=new THREE.Shape();
+			shape3.moveTo(1.5,6.5);
+			shape3.lineTo(3,6.5);
+			shape3.lineTo(3,0);
+			shape3.lineTo(1.5,0);
+			shape3.lineTo(1.5,6.5);
+			var geometry = new THREE.ExtrudeGeometry( shape3, extrudeSettings );
+			//add the part to the kanji
+			bspkanji = bspkanji.union(new ThreeBSP(geometry));
+			
+			var shape4=new THREE.Shape();
+			shape4.moveTo(-1.5,0);
+			shape4.lineTo(-1.5,1.5);
+			shape4.lineTo(1.5,1.5);
+			shape4.lineTo(1.5,0);
+			shape4.lineTo(-1.5,0);
+			var geometry = new THREE.ExtrudeGeometry( shape4, extrudeSettings );
+			//add the part to the kanji
+			bspkanji = bspkanji.union(new ThreeBSP(geometry));
+			
+			
+			var shape5=new THREE.Shape();
+			shape5.moveTo(-1.5,3.25);
+			shape5.lineTo(1.5,3.25);
+			shape5.lineTo(1.5,4.75);
+			shape5.lineTo(-1.5,4.75);
+			shape5.lineTo(-1.5,3.25);
+			var geometry = new THREE.ExtrudeGeometry( shape5, extrudeSettings );
+			//add the part to the kanji
+			bspkanji = bspkanji.union(new ThreeBSP(geometry));
+			
+			
+			//curve up
+			var shape6=new THREE.Shape();
+			shape6.moveTo(-1,8);
+			shape6.quadraticCurveTo(-0.4,9,0,10);
+			shape6.lineTo(1.3,9.7);
+			shape6.quadraticCurveTo(1.1,9,0.5,8);
+			var geometry = new THREE.ExtrudeGeometry( shape6, extrudeSettings );
+			//add the part to the kanji
+			bspkanji = bspkanji.union(new ThreeBSP(geometry));
+			
+			
+			//up curve right up
+			var shape7=new THREE.Shape();
+			shape7.moveTo(4,4.75);
+			shape7.quadraticCurveTo(5.8,6,8,8.5);
+			shape7.lineTo(8.8,7.5);
+			shape7.quadraticCurveTo(7.5,5.8,4.75,3.5);
+			var geometry = new THREE.ExtrudeGeometry( shape7, extrudeSettings );
+			//add the part to the kanji
+			bspkanji = bspkanji.union(new ThreeBSP(geometry));
+			
+			
+			// up curve right down
+			var shape8=new THREE.Shape();
+			shape8.moveTo(4,1.75);
+			shape8.quadraticCurveTo(6,0.8,8,-1.3);
+			shape8.lineTo(8.8,0);
+			shape8.quadraticCurveTo(5.8,2.5,4.75,2.8);
+			var geometry = new THREE.ExtrudeGeometry( shape8, extrudeSettings );
+			//add the part to the kanji
+			bspkanji = bspkanji.union(new ThreeBSP(geometry));
+			
+			
+			//up curve left up
+			var shape9=new THREE.Shape();
+			shape9.moveTo(-4,4.75);
+			shape9.quadraticCurveTo(-5.4,7.3,-8,8.5);
+			shape9.lineTo(-8.8,7.5);
+			shape9.quadraticCurveTo(-6,6.3,-4.75,3.5);
+			var geometry = new THREE.ExtrudeGeometry( shape9, extrudeSettings );
+			//add the part to the kanji
+			bspkanji = bspkanji.union(new ThreeBSP(geometry));
+			
+			
+			//up curve left down
+			var shape10=new THREE.Shape();
+			shape10.moveTo(-4,1.75);
+			shape10.quadraticCurveTo(-6,-0.7,-8,-1.3);
+			shape10.lineTo(-8.8,-0.2);
+			shape10.quadraticCurveTo(-6.2,0.7,-4.75,2.8);
+			var geometry = new THREE.ExtrudeGeometry( shape10, extrudeSettings );
+			//add the part to the kanji
+			bspkanji = bspkanji.union(new ThreeBSP(geometry));
+
+			
+			//vertical line
+			var shape11=new THREE.Shape();
+			shape11.moveTo(-0.75,-1);
+			shape11.lineTo(-0.75,-9);
+			shape11.lineTo(0.75,-9);
+			shape11.lineTo(0.75,-1);
+			shape11.lineTo(-0.75,-1);
+			var geometry = new THREE.ExtrudeGeometry( shape11, extrudeSettings );
+			//add the part to the kanji
+			bspkanji = bspkanji.union(new ThreeBSP(geometry));
+			
+			
+			//horizontal line
+			var shape12=new THREE.Shape();
+			shape12.moveTo(-8.8,-2.5);
+			shape12.lineTo(-8.8,-4);
+			shape12.lineTo(8.8,-4);
+			shape12.lineTo(8.8,-2.5);
+			shape12.lineTo(-8.8,-2.5);
+			var geometry = new THREE.ExtrudeGeometry( shape12, extrudeSettings );
+			//add the part to the kanji
+			bspkanji = bspkanji.union(new ThreeBSP(geometry));
+			
+			
+			//down curve left down
+			var shape13=new THREE.Shape();
+			shape13.moveTo(0.75,-4);
+			shape13.quadraticCurveTo(5,-8,8.8,-8);
+			shape13.lineTo(9.8,-7);
+			shape13.quadraticCurveTo(5.8,-6.5,2.5,-4);
+			var geometry = new THREE.ExtrudeGeometry( shape13, extrudeSettings );
+			//add the part to the kanji
+			bspkanji = bspkanji.union(new ThreeBSP(geometry));
+		
+			
+			//down curve right down
+			var shape14=new THREE.Shape();
+			shape14.moveTo(-0.75,-4);
+			shape14.quadraticCurveTo(-5,-8,-8.8,-8);
+			shape14.lineTo(-9.8,-7);
+			shape14.quadraticCurveTo(-5.8,-6.5,-2.5,-4);
+			var geometry = new THREE.ExtrudeGeometry( shape14, extrudeSettings );
+			//add the part to the kanji
+			bspkanji = bspkanji.union(new ThreeBSP(geometry));
+			
+			
+			//constructing a triangle object
+			var triangle = new THREE.Shape();
+			triangle.moveTo(-10,-10);
+			triangle.lineTo(10,-10);
+			triangle.lineTo(-10,10);
+			triangle.lineTo(-10,-10);
+			var geometry = new THREE.ExtrudeGeometry(triangle, extrudeSettings);
+	
+			
+			//using CSG to
+			//intersect the kanji with the triangle to get the two parts
+			
+			var bsp1 = bspkanji.subtract(new ThreeBSP(geometry));
+			var kanji1 = bsp1.toMesh(new THREE.MeshPhongMaterial({color:'gray',shininess:100}));
+			part1.add(kanji1);
+			
+			var bsp2 = bspkanji.intersect(new ThreeBSP(geometry));
+			var kanji2 = bsp2.toMesh(new THREE.MeshPhongMaterial({color:'gray',shininess:100}));
+			part2.add(kanji2);
+
+			//бавно, НО славно :)
+			
+		</script>
+	</body>
+</html>
