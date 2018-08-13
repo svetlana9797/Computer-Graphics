@@ -1,0 +1,355 @@
+﻿<!DOCTYPE html>
+
+<html>
+	<head>
+		<script src="three.min.js"></script>
+		<script src="human.js"></script>
+	</head>
+	
+	<body>
+		<h1></h1>
+		<audio id="music" autoplay >
+				<source src="melody.mp3" type="audio/mpeg">
+		</audio>
+		<script>
+		
+			// нагласяване на цвета и центрирането на текста с имената ви
+			document.getElementsByTagName('h1')[0].style = 'color:white; text-align:center; font-size:1.75em';
+			
+			// рисувателно поле на цял екран
+			renderer = new THREE.WebGLRenderer({antialias:true});
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+			renderer.domElement.style = 'width:100%; height:100%; position:fixed; top:0; left:0; z-index:-1;';
+			
+			
+			// сцена и камера
+			scene = new THREE.Scene();
+			camera = new THREE.PerspectiveCamera( 50, window.innerWidth/window.innerHeight, 0.1, 2000 );
+			camera.position.set(0,3,250);
+
+			// светлини
+			var light = new THREE.DirectionalLight('lightblue',0.8);
+			light.position.set(0,1,4);
+			scene.add(light);
+			scene.add( new THREE.AmbientLight('white',0.4) );
+			
+			//басейн
+			var geometry = new THREE.CylinderBufferGeometry( 15, 10, 10, 16 );
+			var texture = new THREE.TextureLoader().load( "wood.jpg" );
+            var pool = new THREE.Mesh( geometry, material );
+			pool.material = new THREE.MeshPhongMaterial({map: texture});
+			pool.position.set(90,-63,0);
+            scene.add( pool );
+			
+			//вода
+			var geometry = new THREE.CylinderBufferGeometry( 14, 8, 10, 16 );
+			var texture = new THREE.TextureLoader().load( "water1.jpg" );
+            var water = new THREE.Mesh( geometry, material );
+			water.material = new THREE.MeshPhongMaterial({map: texture});
+			water.position.set(90,-62.75,0);
+            scene.add( water );
+			
+		    //лост
+			var geometry = new THREE.CylinderGeometry( 1, 1, 40, 32 );
+            var лост = new THREE.Mesh( geometry, material );
+			var texture = new THREE.TextureLoader().load( "wood.jpg" );
+			лост.material = new THREE.MeshPhongMaterial({map: texture});
+			лост.position.set(28.5,72,0);
+			лост.rotation.z +=90;
+            scene.add( лост );
+			
+			//топче 1
+			var geometry = new THREE.SphereBufferGeometry( 2, 32, 32 );
+            var т1 = new THREE.Mesh( geometry, material );
+			var texture = new THREE.TextureLoader().load( "wood.jpg" );
+			т1.material = new THREE.MeshPhongMaterial({map: texture});
+			т1.position.set(11,63.5,0);
+            scene.add( т1 ); 
+
+			//топче 2
+			var geometry = new THREE.SphereBufferGeometry( 2, 32, 32 );
+            var т2 = new THREE.Mesh( geometry, material );
+			var texture = new THREE.TextureLoader().load( "wood.jpg" );
+			т2.material = new THREE.MeshPhongMaterial({map: texture});
+			т2.position.set(46,81,0);
+            scene.add( т2 ); 
+
+			//въже1
+			var geometry = new THREE.CylinderGeometry( 0.5, 0.5, 55, 32 );
+            var в1 = new THREE.Mesh( geometry, material );
+			var texture = new THREE.TextureLoader().load( "rope1.jpg" );
+			в1.material = new THREE.MeshPhongMaterial({map: texture});
+			в1.position.set(11,90,0);
+            scene.add( в1 );
+			
+			//въже2
+			var geometry = new THREE.CylinderGeometry( 0.5, 0.5, 40, 32 );
+            var в2 = new THREE.Mesh( geometry, material );
+			var texture = new THREE.TextureLoader().load( "rope1.jpg" );
+			в2.material = new THREE.MeshPhongMaterial({map: texture});
+			в2.position.set(46,101,0);
+            scene.add( в2);
+			
+			//дъска за скачане
+			var geometry = new THREE.BoxGeometry( 60, 2.5, 20);
+			var material = new THREE.MeshPhongMaterial();
+			var дъска = new THREE.Mesh( geometry, material );
+			var texture = new THREE.TextureLoader().load( "wood2.jpg" );
+			дъска.material = new THREE.MeshPhongMaterial({map: texture});
+			дъска.position.set(-29,-19,0);
+			scene.add(дъска);
+			
+			//стълба - пилон1
+			var geometry = new THREE.CylinderGeometry(1.5,1.5,60, 32 );
+            var material = new THREE.MeshPhongMaterial();
+            var ст1 = new THREE.Mesh( geometry, material );
+			ст1.position.set(-58,-48,-8);
+            scene.add( ст1 );
+			
+            //стълба - пилон2
+			var geometry = new THREE.CylinderGeometry(1.5,1.5,60, 32 );
+            var material = new THREE.MeshPhongMaterial();
+            var ст2 = new THREE.Mesh( geometry, material );
+			ст2.position.set(-58,-48,8);
+            scene.add( ст2 );
+			
+			//стъпало1
+			var geometry = new THREE.CylinderGeometry(1,1,16, 32 );
+            var material = new THREE.MeshPhongMaterial();
+            var стъп1 = new THREE.Mesh( geometry, material );
+			стъп1.position.set(-58,-48,0);
+			стъп1.rotation.x+=89.5;
+            scene.add( стъп1 );
+			
+			//стъпало2
+			var geometry = new THREE.CylinderGeometry(1,1,16, 32 );
+            var material = new THREE.MeshPhongMaterial();
+            var стъп2 = new THREE.Mesh( geometry, material );
+			стъп2.position.set(-58,-38,0);
+			стъп2.rotation.x+=89.5;
+            scene.add( стъп2 );
+			
+			//стъпало3
+			var geometry = new THREE.CylinderGeometry(1,1,16, 32 );
+            var material = new THREE.MeshPhongMaterial();
+            var стъп3 = new THREE.Mesh( geometry, material );
+			стъп3.position.set(-58,-28,0);
+			стъп3.rotation.x+=89.5;
+            scene.add( стъп3 );
+			
+			//стъпало4
+			var geometry = new THREE.CylinderGeometry(1,1,16, 32 );
+            var material = new THREE.MeshPhongMaterial();
+            var стъп4 = new THREE.Mesh( geometry, material );
+			стъп4.position.set(-58,-58,0);
+			стъп4.rotation.x+=89.5;
+            scene.add( стъп4 );
+			
+			//стъпало5
+			var geometry = new THREE.CylinderGeometry(1,1,16, 32 );
+            var material = new THREE.MeshPhongMaterial();
+            var стъп5 = new THREE.Mesh( geometry, material );
+			стъп5.position.set(-58,-68,0);
+			стъп5.rotation.x+=89.5;
+            scene.add( стъп5 );
+			
+			//под
+			var floor = new THREE.Mesh(new THREE.CylinderGeometry(250,250,0.05,32));
+			floor.position.set(0,-75,0);
+			var texture = new THREE.TextureLoader().load( "circus.jpg" );
+			floor.material = new THREE.MeshPhongMaterial({map: texture});
+			scene.add( floor );
+			
+			//ограда
+			var geometry = new THREE.TorusBufferGeometry( 260, 25, 16, 100 );
+            var fence = new THREE.Mesh( geometry, material );
+			var texture = new THREE.TextureLoader().load( "red1.jpg" );
+			fence.material = new THREE.MeshPhongMaterial({map: texture});
+			fence.rotation.x+=89.5;
+			fence.position.set(0,-73,0);
+            scene.add( fence );
+			
+			//публика
+			var geometry = new THREE.TorusBufferGeometry( 1200, 500, 3,100 );
+            var crowd = new THREE.Mesh( geometry, material );
+			var texture = new THREE.TextureLoader().load( "dark1.png" );
+			crowd.material = new THREE.MeshPhongMaterial({map: texture});
+			crowd.rotation.x+=89.5;
+			crowd.position.set(0,200,0);
+            scene.add( crowd );
+
+			// функция за анимиране на сцената
+			var t = 0; // време
+			function drawFrame()
+			{
+				requestAnimationFrame( drawFrame );
+				if (animate) animate(t++);
+				renderer.render( scene, camera );
+			}			
+			
+			// човече
+			colors=['gray','beige','darkblue','beige','gray','darkred'];
+			пич1 = мъжествен();
+			пич1.position.set(0,15,0);  //(0,15,0)
+			пич1.л_лакът.врът(0,20,-10); //(0,20,-10)
+			пич1.д_лакът.врът(0,-20,-10); //(0,-20,-10)
+			пич1.л_крак.врът(0,-10,5);  // (0,-10,5)
+			пич1.д_крак.врът(0,10,5);   // (0,10,5)
+			
+			//нос
+			var geometry = new THREE.SphereBufferGeometry( 1, 32, 32 );
+			var material = new THREE.MeshBasicMaterial( {color: 'darkred'} );
+            var нос = new THREE.Mesh( geometry, material );
+			нос.position.set(3,2,0);//(3,2,0)
+            пич1.глава.add( нос ); 
+			
+			// анимация на човечето
+			animate = function (t)
+			{
+			
+				scene.rotateY(rad(-0.1));
+				
+			
+				//подготовка за скок ->разтягане нагоре
+				if(t<45)
+				{
+				  var x = sin(2*t);  // 0->1
+				  пич1.л_ръка.врът(170*x,0,0);  //(170,0,0)
+				  пич1.д_ръка.врът(-170*x,0,0); //(-170,0,0)
+				  
+				  пич1.л_лакът.врът(0,20-20*x,-10+10*x); //(0,0,0)
+				  пич1.д_лакът.врът(0,-20+20*x,-10+10*x); //(0,0,0)
+				  
+				  пич1.глава.врът(0,0,30*x);   //(0,30,0)
+				  нос.position.set(3+0.3*x,2+0.3*x,0);//(3.3,2.3,0)
+				  
+				  пич1.position.set(0,15 + 2*x,0);  //(0,17,0)
+				  пич1.тяло.врът(0,0,10*x); //(0,0,10)
+				  
+				  пич1.л_глезен.врът(0,0,35*x);  //(0,0,35)
+				  пич1.д_глезен.врът(0,0,35*x);  //(0,0,35)
+				}
+				
+				//подготовка за скок ->позиция в готовност
+				if(t>=45&&t<90)
+				{
+				  var x = sin(2*(t+45));  //0-> -1
+				  пич1.л_ръка.врът(170+150*x,0,0); //(20,0,0)
+				  пич1.д_ръка.врът(-170-150*x,0,0); //(-20,0,0)
+				  
+				  пич1.л_лакът.врът(0,-20*x,10*x); //(0,20,-10)
+				  пич1.д_лакът.врът(0,20*x,10*x); //(0,-20,10)
+				  
+				  пич1.глава.врът(0,0,30+30*x); //(0,0,0)
+				  нос.position.set(3.3-0.4*x,2.3+0.3*x,0);//(3.7,2,0)
+				  
+				  пич1.position.set(0,17 +3*x,0);  //(0,14,0)
+				  пич1.тяло.врът(0,0,10 + 10*x);    // (0,0,0)
+				  
+				  пич1.л_глезен.врът(0,0,35 + 35*x); //(0,0,0)
+				  пич1.д_глезен.врът(0,0,35 + 35*x);//(0,0,0)
+				}
+				
+				//засилка
+				if(t>=90&&t<135)
+				{
+				  
+				  var x = sin(2*t); // 0-> -1
+				  пич1.л_ръка.врът(20+20*x,0,-90*x); //(0,0,90)
+				  пич1.д_ръка.врът(-20-20*x,0,-90*x); //(0,0,90)
+				  
+				  пич1.глава.врът(0,0,25*x);  //(0,0,-25)
+				  нос.position.set(3.7+0.3*x,2+3*x,0);//(3.4,-1,0)
+				  
+				  пич1.position.set(4.5*x,14+11*x,0); //(-4.5,3,0)
+				  пич1.тяло.врът(0,0,30*x); //(0,0,-30)
+				  пич1.таз.врът(0,0,45*x); //(0,0,-45)
+				  
+				  пич1.л_крак.врът(0,-10,5+125*x); //(0,-10,-120)
+				  пич1.д_крак.врът(0,10,5+125*x); //(0,10,-120)
+				  
+				  пич1.л_коляно.врът(0,0,-120*x); //(0,0,120)
+				  пич1.д_коляно.врът(0,0,-120*x); //(0,0,120)
+				  
+				  пич1.л_глезен.врът(0,0,-15*x); //(0,0,-15)
+				  пич1.д_глезен.врът(0,0,-15*x); //(0,0,-15)
+				}
+				
+				//наклон и скачане
+				if(t>=135&&t<180)
+				{
+				var x = sin(2*t-90); //0->-1
+				
+				пич1.л_ръка.врът(2.5*x,0,90+280*x); //(-2.5,0,-190)
+				пич1.д_ръка.врът(-2.5*x,0,90+280*x); //(2.5,0,-190)
+				пич1.л_китка.врът(0,90*x,0);
+				пич1.д_китка.врът(0,90*x,0);
+				
+				пич1.глава.врът(0,0,-25-35*x);  // (0,0,10)
+				нос.position.set(3.4+0.2*x,-1-3*x,0);//(3.2,2,0)
+				
+				пич1.тяло.врът(0,0,-30-40*x);  //(0,0,10)
+				пич1.position.set(-4.5-22.5*x,3-25*x,0); //(18,28,0)
+				пич1.таз.врът(0,0,-45-15*x); //(0,0,-30)
+				
+				пич1.л_крак.врът(0,-10,-120-120*x); //(0,-10,0)
+				пич1.д_крак.врът(0,10,-120-120*x); //(0,10,0)
+				  
+				пич1.л_коляно.врът(0,0,120+120*x); //(0,0,0)
+				пич1.д_коляно.врът(0,0,120+120*x); //(0,0,0)
+				  
+				пич1.л_глезен.врът(0,0,15-15*x); //(0,0,-15)
+				пич1.д_глезен.врът(0,0,15-15*x); //(0,0,-15)
+				}
+				
+				//хващане
+				if(t>=180&&t<225)
+				{
+				  var x = sin(2*t); // 0->1
+				  
+				  пич1.position.set(18+48*x,28+15*x,0); //(60,43,0)
+				  пич1.таз.врът(0,0,-30+45*x); //(0,0,15)
+				  пич1.тяло.врът(0,0,10+20*x); //(0,0,30)
+				  
+				  пич1.глава.врът(0,0,10-25*x);//(0,0,-15)
+				  нос.position.set(3.2+1.2*x,2-0.4*x,0);//(4.4,1.6,0)
+				  
+				  пич1.л_крак.врът(0,-10,-110*x); //(0,-10,-110)
+				  пич1.д_крак.врът(0,-10,-70*x); //(0,-10,-70)
+				  
+				  пич1.л_коляно.врът(0,0,130*x); //(0,0,130)
+				  пич1.д_коляно.врът(0,0,80*x); //(0,0,80)
+				}
+				
+				
+				//падане
+				if(t>=225&&t<270)
+				{
+				  var x = sin(2*(t-45)); // 0->1
+				  
+				  пич1.л_ръка.врът(-2.5,0,-190+180*x); //(0,0,-10)
+				  пич1.д_ръка.врът(2.5,0,-190+180*x); //(0,0,-10)
+				  
+				  пич1.л_лакът.врът(0,20,-10-60*x); //(0,20,-10)
+				  пич1.д_лакът.врът(0,-20,-10-60*x); //(0,-20,-10)
+				  
+				  пич1.глава.врът(0,0,-15-10*x);//(0,0,-15)
+				  нос.position.set(4.4-0.2*x,1.6-1.9*x,0);//(4.4,1.6,0)
+				  
+				  пич1.position.set(60+35*x,43-103*x,0); //(85,-60,0)
+				  пич1.таз.врът(0,0,15+25*x); //(0,0,40)
+				  пич1.тяло.врът(0,0,30-70*x); //(0,0,-40)
+				  
+				  пич1.д_коляно.врът(0,0,80+50*x); //(0,0,130)
+				  
+				  пич1.д_крак.врът(0,-10,-70-60*x); //(0,-10,-130)
+				  пич1.л_крак.врът(0,-10,-110-20*x); //(0,-10,-130)
+				}
+				
+			}
+
+			drawFrame();
+		</script>
+	</body>
+</html>
